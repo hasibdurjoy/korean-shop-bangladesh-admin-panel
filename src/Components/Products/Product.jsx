@@ -25,9 +25,7 @@ const Product = ({ product, handleRefresh }) => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await deleteFunction(
-          `https://dry-tundra-71318.herokuapp.com/products/${id}`
-        );
+        const res = await deleteFunction(`/products/${id}`);
         console.log(res);
         if (res.status === 200 || 201) {
           handleRefresh();
@@ -134,7 +132,11 @@ const Product = ({ product, handleRefresh }) => {
           justifyContent: "center",
         }}
       >
-        <ProductEditModal product={product} />
+        <ProductEditModal
+          product={product}
+          handleRefresh={handleRefresh}
+          handleClose={handleClose}
+        />
       </Modal>
     </Grid>
   );

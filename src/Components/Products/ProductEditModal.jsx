@@ -11,26 +11,39 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
-import { postFunction } from "../../ApiCalls/CallApis";
+import { postFunction, updateFunction } from "../../ApiCalls/CallApis";
 import { Card } from "@material-ui/core";
+import Swal from "sweetalert2";
 
-const ProductEditModal = ({ product }) => {
+const ProductEditModal = ({ product, handleRefresh, handleClose }) => {
+  console.log(product);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
     console.log(data);
-    /* try {
-      const res = await postFunction(
-        "https://dry-tundra-71318.herokuapp.com/products",
-        data
-      );
-      console.log(res);
-      if (res.status == 200 || 201) {
-        reset();
-        alert("added");
+    handleClose();
+    Swal.fire({
+      title: "Are you sure? You want to edit product",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "green",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, Confirm it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await updateFunction(`/products/${product._id}`, data);
+          console.log(res);
+          if (res.status === 201 || 200) {
+            handleRefresh();
+            handleClose();
+            Swal.fire("Confirmed!", "Your  have edited product", "success");
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
-    } catch (error) {
-      console.log(error);
-    } */
+    });
   };
   return (
     <div>
@@ -78,7 +91,6 @@ const ProductEditModal = ({ product }) => {
                 required
                 label="Quantity(ml)"
                 id="outlined-basic"
-                type="number"
                 variant="outlined"
                 defaultValue={product.quantity}
                 sx={{ width: "49%", backgroundColor: "white", mb: 1 }}

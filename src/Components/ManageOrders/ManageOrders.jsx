@@ -13,12 +13,15 @@ import SingleOrder from "./SingleOrder";
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [counter, setCounter] = useState(0);
+
+  const handleRefresh = () => {
+    setCounter(counter + 1);
+  };
 
   const getAllOrders = async () => {
     try {
-      const orders = await getFunction(
-        "https://dry-tundra-71318.herokuapp.com/orders"
-      );
+      const orders = await getFunction("/orders");
       setOrders(orders.data);
     } catch (error) {
       console.log(error);
@@ -26,7 +29,7 @@ const ManageOrders = () => {
   };
   useEffect(() => {
     getAllOrders();
-  }, []);
+  }, [counter]);
   return (
     <div>
       <TableContainer sx={{ maxHeight: "90vh" }}>
@@ -45,7 +48,13 @@ const ManageOrders = () => {
           </TableHead>
           <TableBody>
             {orders.map((order) => {
-              return <SingleOrder key={order._id} order={order} />;
+              return (
+                <SingleOrder
+                  key={order._id}
+                  order={order}
+                  handleRefresh={handleRefresh}
+                />
+              );
             })}
           </TableBody>
         </Table>

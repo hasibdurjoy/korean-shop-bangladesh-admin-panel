@@ -13,9 +13,7 @@ const Products = () => {
 
   const getProducts = async () => {
     try {
-      const products = await getFunction(
-        "https://dry-tundra-71318.herokuapp.com/products"
-      );
+      const products = await getFunction("/products");
       setProducts(products.data);
     } catch (error) {
       console.log(error);

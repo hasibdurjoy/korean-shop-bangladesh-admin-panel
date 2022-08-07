@@ -20,10 +20,7 @@ const AddNewProduct = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const res = await postFunction(
-        "https://dry-tundra-71318.herokuapp.com/products",
-        data
-      );
+      const res = await postFunction("/products", data);
       console.log(res);
       if (res.status == 200 || 201) {
         reset();
