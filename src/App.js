@@ -1,23 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import Home from "./Components/Home/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Products from "./Components/Products/Products";
+import ManageOrders from "./Components/ManageOrders/ManageOrders";
+import AddNewProduct from "./Components/AddNewProduct/AddNewProduct";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route exact path="/" element={<Products />} />
+            <Route path="/manageProducts" element={<Products />} />
+            <Route path="/manageOrders" element={<ManageOrders />} />
+            <Route path="/addNewProduct" element={<AddNewProduct />} />
+            {/* <Route path={`/dashboard/pay/:appointmentId`} element={<Payment />} />
+              <Route path={`/dashboard/makeAdmin`} element={<AdminRoute><MakeAdmin /></AdminRoute>} />
+              <Route path={`/dashboard/addDoctor`} element={<AdminRoute><AddDoctor /></AdminRoute>} /> */}
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
