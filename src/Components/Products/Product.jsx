@@ -1,11 +1,41 @@
 import { Button, Grid, Modal, Paper } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { deleteFunction } from "../../ApiCalls/CallApis";
+import ProductEditModal from "./ProductEditModal";
 
-const Product = ({ product }) => {
+const Product = ({ product, handleRefresh }) => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(0);
   const [addedOnCartModalOpen, setAddedOnCartModalOpen] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteFunction(
+          `https://dry-tundra-71318.herokuapp.com/products/${id}`
+        );
+        console.log(res);
+        if (res.status === 200 || 201) {
+          handleRefresh();
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      }
+    });
+  };
 
   return (
     <Grid item xs={12} md={3}>
@@ -75,6 +105,9 @@ const Product = ({ product }) => {
             fullWidth
             variant="outlined"
             style={{ borderColor: "#e85d04", color: "black" }}
+            onClick={() => {
+              handleOpen();
+            }}
           >
             Edit
           </Button>
@@ -82,11 +115,27 @@ const Product = ({ product }) => {
             variant="contained"
             fullWidth
             style={{ backgroundColor: "#e85d04" }}
+            onClick={() => {
+              handleDelete(product._id);
+            }}
           >
             Delete
           </Button>
         </div>
       </Paper>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ProductEditModal product={product} />
+      </Modal>
     </Grid>
   );
 };

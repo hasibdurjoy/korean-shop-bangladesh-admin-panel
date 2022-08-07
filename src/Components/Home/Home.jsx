@@ -20,12 +20,14 @@ import {
   useMatch,
   useResolvedPath,
 } from "react-router-dom";
-import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  AccountCircle,
+  AddCircle,
+  AdminPanelSettings,
+  Logout,
+  ProductionQuantityLimits,
+  ShoppingBag,
+} from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -62,7 +64,7 @@ const Home = () => {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <ProductionQuantityLimitsIcon />
+                  <ProductionQuantityLimits />
                 </ListItemIcon>
                 <ListItemText primary="Manage Products" />
               </ListItemButton>
@@ -73,7 +75,7 @@ const Home = () => {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <AddCircleIcon />
+                  <AddCircle />
                 </ListItemIcon>
                 <ListItemText primary="Add New Products" />
               </ListItemButton>
@@ -83,7 +85,7 @@ const Home = () => {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <ShoppingBagIcon />
+                  <ShoppingBag />
                 </ListItemIcon>
                 <ListItemText primary="Orders" />
               </ListItemButton>
@@ -92,7 +94,7 @@ const Home = () => {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <AccountCircleIcon />
+                <AccountCircle />
               </ListItemIcon>
               <ListItemText primary="Users" />
             </ListItemButton>
@@ -100,7 +102,7 @@ const Home = () => {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <AdminPanelSettingsIcon />
+                <AdminPanelSettings />
               </ListItemIcon>
               <ListItemText primary="Admin Panel" />
             </ListItemButton>
@@ -108,7 +110,7 @@ const Home = () => {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <LogoutIcon />
+                <Logout />
               </ListItemIcon>
               <ListItemText primary="LogOut" />
             </ListItemButton>

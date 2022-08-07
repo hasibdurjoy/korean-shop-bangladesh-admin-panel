@@ -9,3 +9,8 @@ export const postFunction = async (url, data) => {
   const response = await axios.post(url, data);
   return response;
 };
+
+export const deleteFunction = async (url) => {
+  const response = await axios.delete(url);
+  return response;
+};

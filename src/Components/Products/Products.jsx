@@ -5,8 +5,13 @@ import Product from "./Product";
 
 const Products = () => {
   const [AllProducts, setProducts] = useState([]);
+  const [counter, setCounter] = useState(0);
 
-  const getTopTenProducts = async () => {
+  const handleRefresh = () => {
+    setCounter(counter + 1);
+  };
+
+  const getProducts = async () => {
     try {
       const products = await getFunction(
         "https://dry-tundra-71318.herokuapp.com/products"
@@ -17,13 +22,19 @@ const Products = () => {
     }
   };
   useEffect(() => {
-    getTopTenProducts();
-  }, []);
+    getProducts();
+  }, [counter]);
   return (
     <div>
       <Grid container spacing={2}>
         {AllProducts.map((product) => {
-          return <Product key={product.id} product={product} />;
+          return (
+            <Product
+              key={product.id}
+              product={product}
+              handleRefresh={handleRefresh}
+            />
+          );
         })}
       </Grid>
     </div>

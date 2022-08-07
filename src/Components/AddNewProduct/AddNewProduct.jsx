@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   Button,
+  Card,
+  CardContent,
   Container,
   FormControl,
   InputLabel,
@@ -13,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { postFunction } from "../../ApiCalls/CallApis";
 
 const AddNewProduct = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -24,24 +26,12 @@ const AddNewProduct = () => {
       );
       console.log(res);
       if (res.status == 200 || 201) {
+        reset();
         alert("added");
       }
-    } catch (error) {}
-    /* fetch("https://salty-ravine-02871.herokuapp.com/products", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.insertedId) {
-          // handleSuccessModalOpen("Successfully Added Product");
-          // setAddSuccess(true);
-          reset();
-        }
-      }); */
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -136,7 +126,7 @@ const AddNewProduct = () => {
           />
 
           <TextField
-            {...register("about")}
+            {...register("description")}
             required
             label="description"
             id="outlined-basic"
