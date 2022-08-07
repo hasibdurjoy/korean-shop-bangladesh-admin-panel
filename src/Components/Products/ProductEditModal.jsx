@@ -16,24 +16,21 @@ import { Card } from "@material-ui/core";
 import Swal from "sweetalert2";
 
 const ProductEditModal = ({ product, handleRefresh, handleClose }) => {
-  console.log(product);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
     handleClose();
     Swal.fire({
       title: "Are you sure? You want to edit product",
-      text: "You won't be able to revert this!",
+      text: "",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "green",
-      cancelButtonColor: "#3085d6",
+      confirmButtonColor: "#1b9d1b",
+      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Confirm it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           const res = await updateFunction(`/products/${product._id}`, data);
-          console.log(res);
           if (res.status === 201 || 200) {
             handleRefresh();
             handleClose();

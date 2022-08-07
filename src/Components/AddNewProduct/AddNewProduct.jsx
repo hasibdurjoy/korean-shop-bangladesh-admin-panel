@@ -13,22 +13,33 @@ import {
 import { Box } from "@mui/system";
 import { useForm } from "react-hook-form";
 import { postFunction } from "../../ApiCalls/CallApis";
+import Swal from "sweetalert2";
 
 const AddNewProduct = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      const res = await postFunction("/products", data);
-      console.log(res);
-      if (res.status == 200 || 201) {
-        reset();
-        alert("added");
+    Swal.fire({
+      title: "Are you sure? You want to add new product",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1b9d1b",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Confirm it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await postFunction("/products", data);
+          if (res.status == 200 || 201) {
+            reset();
+            Swal.fire("Confirmed!", "Your  have added product", "success");
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    });
   };
 
   return (
