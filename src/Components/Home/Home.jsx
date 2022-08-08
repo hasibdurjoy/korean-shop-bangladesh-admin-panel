@@ -28,10 +28,12 @@ import {
   ProductionQuantityLimits,
   ShoppingBag,
 } from "@mui/icons-material";
+import useAuth from "../../hooks/useAuth";
 
 const drawerWidth = 240;
 
 const Home = () => {
+  const { user, logOut } = useAuth();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -39,9 +41,18 @@ const Home = () => {
         position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
       >
-        <Toolbar>
+        <Toolbar
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography variant="h6" noWrap component="div">
             Korean Shop Bangladesh Admin Panel
+          </Typography>
+          <Typography variant="h6" noWrap component="div">
+            {user.displayName}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -107,7 +118,12 @@ const Home = () => {
               <ListItemText primary="Admin Panel" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem
+            disablePadding
+            onClick={() => {
+              logOut();
+            }}
+          >
             <ListItemButton>
               <ListItemIcon>
                 <Logout />
